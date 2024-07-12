@@ -79,41 +79,7 @@
           </div>
         {% endfor %}
       </article>
-      <!-- <nav class="blog-pagination" aria-label="Pagination">
-        
-        <ul class="pagination">
-        <a class="btn btn-outline-primary rounded-pill" href="#">Older</a>
-        <a class="btn btn-outline-secondary rounded-pill disabled" aria-disabled="true">Newer</a>
-        
-        </ul>
-       
-      </nav> -->
-      <!-- <nav class="blog-pagination" aria-label="Pagination">
-        
-        <ul class="pagination">
-        {% if paged_post.has_previous %}
-        <li class="page-item"><a class="btn btn-outline-primary rounded-pill" href="?page={{paged_post.previous_page_number}}">Older</a></li>
-        {% else %}
-
-        <li class="page-item-disabled"><a class="btn btn-outline-primary rounded-pill" href="?page=1">Older</a></li>
-        {% endif %}
-
-
-        {% for i in paged_post.paginator.page_range %}
-          {% if paged_post.number == i %}
-            <li class="page-item-active"><a href="" class="page-link">{{i}}</a></li>
-          {% else %}
-            <li class="page-item"><a href="?page={{i}}" class="page-link">{{i}}</a></li>
-          {% endif %}
-        {% endfor %}
-
-
-
-        <li class="page-item"><a class="btn btn-outline-secondary rounded-pill disabled" aria-disabled="true">Newer</a></li>
-        
-        </ul>
-        
-      </nav> -->
+     
       <nav class="blog-pagination" aria-label="Pagination">
         <ul class="pagination">
             {% if posts.has_previous %}
@@ -145,15 +111,16 @@
     <div class="col-md-4">
       <div class="position-sticky" style="top: 2rem;">
         <div>
-          <h4 class="fst-italic mt-3">Recent posts</h4>
+          <h4 class="fst-italic mt-3">Recent posts</h4><hr>
           <ul class="list-unstyled">
             {% for post in latestpost_list %}
             <li>
-              <a class="d-flex flex-column flex-lg-row gap-3 align-items-start align-items-lg-center py-3 link-body-emphasis text-decoration-none border-top" href="#">
+              <a class="d-flex flex-column flex-lg-row gap-3 align-items-start align-items-lg-center py-3 link-body-emphasis text-decoration-none " href="#">
                
                  <div style="width: 100%; height: 180px; overflow: hidden; position: relative;">
                 <img src="{{ post.blog_image.url }}" alt="Thumbnail" style="width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0;">
               </div>
+              <hr style="color: red;">
                 <div class="col-lg-8">
                   <h6 class="mb-0"><a href="{% url 'blog' post.slug %}">{{post.title}}</a></h6>
                   <small class="text-body-secondary">{{post.category}}</small>
@@ -174,9 +141,8 @@
         </div>
       </div>
     </div>
-    
   </div>
-
 </main>
+
 
 {% endblock %}

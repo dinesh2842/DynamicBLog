@@ -18,6 +18,15 @@ STATUS_CHOICE=(
   ('published','Published')
 )
 
+class ContactUs(models.Model):
+  name=models.CharField(max_length=50)
+  email=models.EmailField(max_length=50)
+  message=models.TextField()
+
+  def __str__(self):
+    return self.email
+
+
 class Blogs(models.Model):
   title=models.CharField(max_length=100,unique=True)
   slug=models.SlugField(unique=True,blank=True)
@@ -36,6 +45,7 @@ class Blogs(models.Model):
   
   class Meta:
     verbose_name_plural='Blogs'
+
   
   
 

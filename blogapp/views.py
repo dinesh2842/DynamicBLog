@@ -3,6 +3,10 @@ from .models import *
 from django.shortcuts import get_object_or_404
 from django.db.models import Q,Count
 from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
+from .models import ContactUs
+from django.core.mail import send_mail
+from django.conf import settings
+
 
 def home(request):
   categories = Category.objects.all()
@@ -50,11 +54,13 @@ def category(request,category_id):
 
 def blogdeatil(request,slug):
   single_post=get_object_or_404(Blogs,slug=slug,status='published')
+  lastest_post=Blogs.objects.all().order_by('-created_at')[:3]
 
 
   
   context={
     'single_post':single_post,
+    'lastest_post':lastest_post
     
   }
   return render(request,'blogs.html',context)
@@ -72,3 +78,30 @@ def search(request):
 
 def register(request):
   return render(request,'register.html')
+
+
+def contact(request):
+  if request.method=='POST':
+    name=request.POST.get('name')
+    email=request.POST.get('email')
+    message=request.POST.get('message')
+    contact=ContactUs(
+      name=name,
+      email=email,
+      message=message
+    )
+    contact.save()
+    send_mail(
+      "Got a message from contact form",
+      'Hi team ,\n\n we have recieved a message from user,please find the below information\nName:'+name+' \nEmail:'+email+'\nMessage:'+message+'',
+      settings.EMAIL_HOST_USER,
+      ['dineshtech0208@gmail.com'],
+      fail_silently=False)
+    send_mail(
+      'Thanks for contacting us',
+      'Hi'+name+' \n thankyou for submitting.Our team will get in touch with you shortly.\n\nBest Regards \n Dinesh',
+      settings.EMAIL_HOST_USER,
+      [email],
+      fail_silently=False)
+    return redirect('index')
+  return render(request,'contact.html')
