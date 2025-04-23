@@ -8,6 +8,7 @@ urlpatterns = [
     path('blog-detail/search/',search,name='search'),
     path('register/',register,name='register'),
     path('contact/',contact,name='contact'),
+    path('ajax',ajax,name='ajax'),
 ]
 
 

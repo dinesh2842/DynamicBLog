@@ -3,7 +3,7 @@ from .models import *
 from django.shortcuts import get_object_or_404
 from django.db.models import Q,Count
 from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
-from .models import ContactUs
+from .models import ContactUs,Ajaxx
 from django.core.mail import send_mail
 from django.conf import settings
 
@@ -105,3 +105,20 @@ def contact(request):
       fail_silently=False)
     return redirect('index')
   return render(request,'contact.html')
+  
+def ajax(request):
+  if request.method=='POST':
+    name=request.POST['name']
+    email=request.POST['email']
+    bio=request.POST['bio']
+    ajax=Ajaxx(
+      name=name,
+      email=email,
+      bio=bio
+    )
+    ajax.save()
+    success='User' + name + 'created successfully'
+    return HttpResponse(success)
+
+
+  return render(request,'ajax.html')

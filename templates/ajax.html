@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+    <h2></h2>
+    <form action="" id="post-form">
+      {% csrf_token %}
+      <label for="name">Name</label><br>
+      <input type="text" name="name" id="name"><br>
+      <label for="email">Email</label><br>
+      <input type="email" name="email" id="email"><br>
+      <label for="bio">Bio</label><br>
+      <input type="text" name="bio" id="bio"><br><br>
+      <button type="submit">Submit</button>
+    </form>
+</body>
+<script type="text/javascript">
+  $(document).on('submit','#post-form',function(e){
+    e.preventDefault();
+
+    $.ajax({  
+      type:'POST',
+      url:'/ajax',
+      data:{
+        name:$('#name').val(),
+        email:$('#email').val(),
+        bio:$('#bio').val(),
+        csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+
+      },
+      success:function(data){
+        $('h2').html(data);
+      }
+    });
+  });
+
+</script>
+</html>

@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'blogapp',
     'dashboard',
+    'storages',
+    
 ]
 
 MIDDLEWARE = [
@@ -86,13 +88,24 @@ EMAIL_USE_TLS = True
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'demo2',
+        'USER': 'mysuperuser',
+        'PASSWORD': 'mysuperuser',
+        'HOST':'database-2.c18gqi2ykncd.us-west-2.rds.amazonaws.com',
+        'PORT':'3306',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -147,3 +160,22 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 #MEDIA FILES CONFIGURATION
 MEDIA_URL='/media/'
 MEDIA_ROOT=BASE_DIR / 'media'
+
+AWS_ACCESS_KEY_ID = 'AKIASR2YVC5MI4FTFNGK'
+AWS_SECRET_ACCESS_KEY = '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'
+
+AWS_STORAGE_BUCKET_NAME = 'blog-bucket-96'
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+
+AWS_S3_FILE_OVERWRITE = False
+
+
+
+STORAGES = {
+    'default':{
+        'BACKEND':'storages.backends.s3boto3.S3StaticStorage',
+    },
+    'staticfiles':{
+        'BACKEND':'storages.backends.s3boto3.S3StaticStorage',
+    },
+}
